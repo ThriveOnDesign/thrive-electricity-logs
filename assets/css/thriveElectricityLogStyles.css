@@ -1,0 +1,64 @@
+body {
+  background-color: black;
+}
+.container {
+  max-width: 400px;
+  margin: auto;
+  margin-top: 50px;
+}
+
+.hide {
+  display: none !important;
+}
+
+form.thrive-elec-input {
+  max-width: 400px;
+  margin: auto;
+  display: grid;
+  grid-template-rows: 1fr 2fr;
+  border-bottom: 0.5px solid #cecece;
+}
+
+label {
+  align-self: center;
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+input {
+  margin: 10px 0 40px 0;
+}
+
+.input-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-gap: 20px;
+}
+
+.check-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.check-list > li {
+  font-size: 18px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin-bottom: 10px;
+  justify-items: center;
+}
+
+.check-list > li button {
+  border: none;
+}
+
+.send-all {
+  text-align: center;
+}
+
+.send-all p{
+  font-size: 20px;
+  font-weight: 600;
+  margin: 30px 0;
+  text-align: center;
+}
