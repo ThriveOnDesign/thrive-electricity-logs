@@ -12,15 +12,7 @@
    // security, exit if accessed directly
    if ( !defined( 'ABSPATH' ) ) exit; 
 
-   // create a variable to the plugin path for less future typing
-   $pluginDir = plugin_dir_path( __DIR__ ).'thrive-electricty-logs';
-
-   function enqueue_electricity_log_style() {
-      wp_enqueue_style( 'thriveElectricityLogStyles', plugin_dir_url( __FILE__ ).'/assets/css/thriveElectricityLogStyles.css', '', time());
-   };
-
-   add_action( 'wp_enqueue_scripts', 'enqueue_electricity_log_style');
-
+   
    // create a function to hold the HTML so that I can convert it into a shortcode
    function thriveElectricityInput() {
       ?>
@@ -84,10 +76,50 @@
 
       <?php
 
-   }
+}
 
-   
+add_shortcode( 'thrive-electricity-log', 'thriveElectricityInput' );
 
-   add_shortcode( 'thrive-electricity-log', 'thriveElectricityInput' );
+/**
+ * AJAX and related things start here
+ */
+// $nonce = wp_create_nonce( "thrive_electricity_log_nonce" );
+$link = admin_url( 'admin-ajax.php' );
+
+add_action( 'init', 'my_script_enqueuer' );
+
+function my_script_enqueuer() {
+   wp_register_script( 'thrive-javascript', plugin_dir_url(__FILE__).'/assets/js/thrive-javascript.js', array( 'jquery' ), time(), true );
+   wp_localize_script( 
+      'thrive-javascript', 
+      'myAjax', 
+      [
+         'ajax_url'  => admin_url( 'admin-ajax.php' ),
+         'nonce'     => wp_create_nonce( 'nonce_name' )
+      ]
+      );
+
+   wp_enqueue_script( 'jquery' );
+   wp_enqueue_script( 'thrive-javascript' );
+}
+
+/**
+ * AJAX and related end here
+ */
+
+
+
+function enqueue_electricity_log_style() {
+   wp_enqueue_style( 'thriveElectricityLogStyles', plugin_dir_url( __FILE__ ).'/assets/css/thriveElectricityLogStyles.css', '', time());
+};
+
+add_action( 'wp_enqueue_scripts', 'enqueue_electricity_log_style');
+
+function thrive_front_end_scripts() {
+   wp_enqueue_script( 'thrive-javascript', plugin_dir_url(__FILE__).'/assets/js/thrive-javascript.js', array( 'jquery' ), time(), true );
+
+}	
+
+add_action( 'wp_enqueue_scripts', 'thrive_front_end_scripts' );
 
    ?>

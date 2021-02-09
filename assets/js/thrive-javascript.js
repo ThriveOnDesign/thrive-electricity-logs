@@ -1,3 +1,4 @@
+console.log(myAjax);
 
 const checkList = document.querySelector('.check-list');
 const sendAll = document.querySelector('.send-all');
@@ -77,8 +78,6 @@ function successAddToDB() {
 }
 
 function handlePostData() {
-
-  // 'http://thrive-real.local/wp-content/themes/hello-elementor/new.php'
 
   fetch( phpLink, {
     method: "POST",
