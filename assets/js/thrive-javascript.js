@@ -1,5 +1,3 @@
-console.log(myAjax);
-
 const checkList = document.querySelector('.check-list');
 const sendAll = document.querySelector('.send-all');
 const sendPHP = document.querySelector('#submit-php');
@@ -77,22 +75,36 @@ function successAddToDB() {
   successMessage.classList.remove('hide');
 }
 
-function handlePostData() {
+// function handlePostData() {
 
-  fetch( phpLink, {
-    method: "POST",
-    headers: {
-      'Content-Type': 'application/JSON'
-    },
-    body: JSON.stringify(readings),
-  })
-  .then(result => {
-    if(result.ok == true) {
-      successAddToDB();
+//   fetch( phpLink, {
+//     method: "POST",
+//     headers: {
+//       'Content-Type': 'application/JSON'
+//     },
+//     body: JSON.stringify(readings),
+//   })
+//   .then(result => {
+//     if(result.ok == true) {
+//       successAddToDB();
+//     }
+//   });
+
+// }
+
+jQuery('#submit-php').click(function(e){
+  e.preventDefault;
+  jQuery.ajax({
+    type: 'post',
+    dataType: 'json',
+    url: myAjax.ajax_url,
+    data: {
+      action: "thrive_write_db",
+      body: "this is my data, my body is my data",
+      _ajax_nonce: myAjax.nonce
     }
-  });
-
-}
+  })
+});
 
 rm1Form.addEventListener('submit', handleSubmit);
 rm2Form.addEventListener('submit', handleSubmit);
@@ -100,7 +112,7 @@ rm3Form.addEventListener('submit', handleSubmit);
 rm4Form.addEventListener('submit', handleSubmit);
 rm5Form.addEventListener('submit', handleSubmit);
 rm6Form.addEventListener('submit', handleSubmit);
-sendPHP.addEventListener('click', handlePostData);
+// sendPHP.addEventListener('click', handlePostData);
 checkList.addEventListener('readingsUpdated', displayReadings);
 
 // listen for the click on the list but only run a function on the condition that the css class in the target matches button

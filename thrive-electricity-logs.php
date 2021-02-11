@@ -86,6 +86,12 @@ add_shortcode( 'thrive-electricity-log', 'thriveElectricityInput' );
 // $nonce = wp_create_nonce( "thrive_electricity_log_nonce" );
 $link = admin_url( 'admin-ajax.php' );
 
+function thrive_write_db() {
+   check_ajax_referer( 'nonce_name' );
+   print_r($_POST['body']);
+}
+add_action( 'wp_ajax_nopriv_thrive_write_db', 'thrive_write_db' );
+
 add_action( 'init', 'my_script_enqueuer' );
 
 function my_script_enqueuer() {
@@ -102,6 +108,7 @@ function my_script_enqueuer() {
    wp_enqueue_script( 'jquery' );
    wp_enqueue_script( 'thrive-javascript' );
 }
+
 
 /**
  * AJAX and related end here
