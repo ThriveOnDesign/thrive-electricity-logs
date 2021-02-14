@@ -92,6 +92,9 @@ function successAddToDB() {
 
 // }
 
+/**
+ * Here is the Ajax call
+ */
 jQuery('#submit-php').click(function(e){
   e.preventDefault;
   jQuery.ajax({
@@ -100,7 +103,7 @@ jQuery('#submit-php').click(function(e){
     url: myAjax.ajax_url,
     data: {
       action: "thrive_write_db",
-      body: "this is my data, my body is my data",
+      body: readings,
       _ajax_nonce: myAjax.nonce
     }
   })

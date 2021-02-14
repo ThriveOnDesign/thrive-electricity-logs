@@ -12,6 +12,8 @@
    // security, exit if accessed directly
    if ( !defined( 'ABSPATH' ) ) exit; 
 
+   // this file contains the function specified in the JS Ajax call and is used to take the data from state and write to the db
+   include plugin_dir_path( __FILE__ ).'thrive-write-db.php';
    
    // create a function to hold the HTML so that I can convert it into a shortcode
    function thriveElectricityInput() {
@@ -83,14 +85,6 @@ add_shortcode( 'thrive-electricity-log', 'thriveElectricityInput' );
 /**
  * AJAX and related things start here
  */
-// $nonce = wp_create_nonce( "thrive_electricity_log_nonce" );
-$link = admin_url( 'admin-ajax.php' );
-
-function thrive_write_db() {
-   check_ajax_referer( 'nonce_name' );
-   print_r($_POST['body']);
-}
-add_action( 'wp_ajax_nopriv_thrive_write_db', 'thrive_write_db' );
 
 add_action( 'init', 'my_script_enqueuer' );
 
@@ -114,19 +108,10 @@ function my_script_enqueuer() {
  * AJAX and related end here
  */
 
-
-
 function enqueue_electricity_log_style() {
    wp_enqueue_style( 'thriveElectricityLogStyles', plugin_dir_url( __FILE__ ).'/assets/css/thriveElectricityLogStyles.css', '', time());
 };
 
 add_action( 'wp_enqueue_scripts', 'enqueue_electricity_log_style');
 
-function thrive_front_end_scripts() {
-   wp_enqueue_script( 'thrive-javascript', plugin_dir_url(__FILE__).'/assets/js/thrive-javascript.js', array( 'jquery' ), time(), true );
-
-}	
-
-add_action( 'wp_enqueue_scripts', 'thrive_front_end_scripts' );
-
-   ?>
+?>
